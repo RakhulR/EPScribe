@@ -10,10 +10,11 @@ EPScribe is a simple and efficient GUI-based tool for converting vector image fi
 * Error logging and status messages
 * Easily convert SVG files from PowerPoint to EPS for seamless use in TeX projects which helps to conserve the vector properties of the image.
 
-## Requirements
+## How to install
 
-If you're using the `.exe` version (only for windows 10 and windows 11), no additional installations are required. Simply download and run the executable from the releases.
+If you're using the `.exe` version (only for windows 10 and windows 11), no additional installations are required. Simply [download](https://github.com/RakhulR/EPScribe/releases/download/v1.1/EPScribe.exe) and run the executable from the releases.
 
+## How to install (for use with python)
 For Python users, ensure the following are installed:
 
 - Python 3.8+
