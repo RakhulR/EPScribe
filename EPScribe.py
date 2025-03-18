@@ -13,6 +13,21 @@ from PyQt5.QtWidgets import (
 )
 from PyQt5.QtCore import QObject, pyqtSignal
 
+def get_ghostscript_path():
+    # If running from a PyInstaller bundle
+    if getattr(sys, 'frozen', False):
+        # prioritize sytem ghostscript
+        gs_path = shutil.which('gs')
+        if gs_path is not None:
+            return gs_path
+        else:
+            return os.path.join(sys._MEIPASS, 'ghostscript', 'gswin64c.exe')
+    else:
+        # If running as a regular Python script
+        return shutil.which('gs')
+        # return r"D:\Ghostscript\App\bin\gswin64c.exe"
+        # return str(Path(os.path.join('.', 'ghostscript', 'gswin64c.exe')).absolute())
+    
 class LogEmitter(QObject):
     log_signal = pyqtSignal(str)
 
@@ -163,14 +178,14 @@ class MainWindow(QMainWindow):
                 return False, base_msg + f"Error: {str(e)}"
         else:
             try:
-                gs_exe = shutil.which("gs")
-                if gs_exe is not None:
-                    subprocess.run([gs_exe, "-dNOPAUSE", "-dBATCH", "-sDEVICE=pdfwrite",
-                                    f"-sOutputFile={str(dest_file)}", str(file)], check=True)
+                epstopdf_exe = shutil.which("epstopdf")
+                if epstopdf_exe is not None:
+                    subprocess.run([epstopdf_exe, str(file), f"--outfile={str(dest_file)}"], check=True, creationflags=subprocess.CREATE_NO_WINDOW)
                 else:
-                    epstopdf_exe = shutil.which("epstopdf")
-                    if epstopdf_exe is not None:
-                        subprocess.run([epstopdf_exe, str(file), f"--outfile={str(dest_file)}"], check=True)
+                    gs_exe = get_ghostscript_path()
+                    if gs_exe is not None:
+                        subprocess.run([gs_exe, "-dNOPAUSE", "-dBATCH", "-dEPSCrop", "-sDEVICE=pdfwrite",
+                                        f"-sOutputFile={str(dest_file)}", str(file)], check=True, creationflags=subprocess.CREATE_NO_WINDOW)
                     else:
                         return False, base_msg + "Neither Ghostscript (gs) nor epstopdf is available."
                 return True, base_msg + "Conversion successful."

@@ -12,7 +12,7 @@ EPScribe is a simple and efficient GUI-based tool for converting vector image fi
 
 ## Requirements
 
-If you're using the `.exe` version, no additional installations are required. Simply download and run the executable.
+If you're using the `.exe` version (only for windows 10 and windows 11), no additional installations are required. Simply download and run the executable from the releases.
 
 For Python users, ensure the following are installed:
 
@@ -27,7 +27,14 @@ For Python users, ensure the following are installed:
 pip install pyqt5 cairosvg
 ```
 
-For the `.exe` version, Ghostscript is bundled, so no additional installation is necessary. Note that `epstopdf` comes with MiKTeX, so ensure it is installed if required. Python users should ensure **Ghostscript** or **epstopdf** is installed and available in your system's `PATH`.
+For the `.exe` version, Ghostscript is bundled, so no additional installation is necessary. Note that `epstopdf` comes with MiKTeX, so ensure it is installed if required. Python users should ensure **Ghostscript** or **MiKTeX** is installed and available in your system's `PATH`. cairosvg requires system installation of cairo in the system (check the documentation of cairosvg for more details).
+
+in case of conda
+
+```bash
+conda install pyqt cairosvg ghostscript
+```
+in this case conda will auto install binaries of cairo and Ghostscript to currently activated conda environment
 
 ## Usage
 
@@ -55,7 +62,9 @@ For the `.exe` version, Ghostscript is bundled, so no additional installation is
 ### Example: Converting PowerPoint Graphics to EPS for TeX  
 
 1. In PowerPoint, create your desired graphic.  
-2. Save the graphic as an **SVG file**:  
+2. Save the graphic as an **SVG file**:
+   - Right click the drawing/image → **Save As Picture** → Choose **SVG (.svg)** as the format. 
+   OR
    - Go to **File** → **Save As** → Choose **SVG (.svg)** as the format.  
 3. Open EPScribe and select **SVG to EPS** conversion.  
 4. Choose the saved SVG file as the input.  
@@ -66,7 +75,7 @@ For the `.exe` version, Ghostscript is bundled, so no additional installation is
 ## Troubleshooting
 
 - Ensure `cairosvg` is installed for SVG to EPS conversion.
-- Confirm Ghostscript (`gs`) or `epstopdf` is installed for EPS to PDF conversion.
+- Confirm `MiKTeX` or Ghostscript (`gs`)  is installed for EPS to PDF conversion.
 - Provide valid input and output paths.
 
 ### For `.exe` Users
